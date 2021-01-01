@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Vue Compute&Watch</title>
+</head>
+<body>
+    <div id = "app-1">
+        <!-- 템플릿 내 복잡한 표현식을 넣는 건 가독성이 좋지 못하다-->
+        {{ message.split('').reverse().join('') }}
+        <!-- 따라서 복잡한 표현식을 computed 속성으로 변경-->
+        <p>원본 메세지 : "{{ message }}"</p>
+        <p>역순으로 표시된 메세지 : "{{ reversedMessage }}" </p>
+        {{ fullName }}
+    </div>
+    <div id = "app-2">
+        {{ fullName }}
+    </div>
+    <script>
+        vm1 = new Vue({
+            el : '#app-1',
+            data : {
+                message : '안녕하세요',
+                firstName : 'Foo',
+                lastName : 'Bar',
+            },
+            // computed 옵션
+            // methods와 computed의 차이 = 캐싱
+            // computed 속성은 대상이 변경될 경우에만 함수를 실행
+            computed : {
+                // vm1.reversedMessage 속성에 대한 getter로 사용됨
+                reversedMessage : function () {
+                    return this.message.split('').reverse().join('')
+                },
+                fullName : function(){
+                    return this.firstName + ' ' + this.lastName
+                }
+            },
+        })
+        vm2 = new Vue({
+            el : '#app-2',
+            data : {    
+                firstName : 'Foo',
+                lastName : 'Bar',
+                fullName : 'Foo bar'
+            },
+            // watch 옵션 : 뷰 인스턴스의 데이터 변경을 관찰하고 이에
+            // 반응하는 watch 속성을 제공
+            watch : {
+                firstName (val) {
+                    this.fullName = val + ' ' + this.lastName
+                },
+                lastName (val) {
+                    this.fullName = this.firstName + ' ' + val
+                }
+            }
+        })
+    </script>
+</body>
+</html>
