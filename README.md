@@ -1,2 +1,2 @@
 # VueStudy
-My personal study repository
+My personal vue.js base study repository
