@@ -87,6 +87,17 @@
         </div>
     </div>
     <!-- v-for와 v-if의 우선순위 -->
+    <!-- 
+        v-for와 v-if가 같은 엘리먼트에 있을 경우 v-for가 수행된 후 v-if 수행
+        조건부 렌더링을 원한다면 템플릿이나 래퍼로 감싸면 된다
+    -->
+        <template v-for="item in items" :key="item.id">
+        </template>
+        <ul v-if="todos.length">
+            <li v-for="todo in todos">
+              {{ todo }}
+            </li>
+        </ul>
     <script>
         vm1 = new Vue({
             el : '#app-1',
