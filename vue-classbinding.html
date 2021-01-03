@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <!-- 클래스 바인딩 -->
+    <!-- 객체 구문 -->
+    <!-- 객체 key 값에서 따옴표가 필요한 경우 : 공백이나 특문 혹은 예약어를 사용할 때-->
+    <div id = 'app-1'>
+        <div v-bind:class = "{ active : isActive, 'text-danger' : hasError }">
+            isActive = true, hasError = false인 경우 div class = "isActive"로 렌더링
+        </div>
+        <div class = "static" v-bind:class = "classObject">
+            클래스 속성과 디렉티브는 공존 가능하며 객체를 data나 computed 옵션에서
+            불러올 수도 있다.
+        </div>
+    </div>
+    <!-- 배열 구문 -->
+    <div id = "app-2">
+        <div v-bind:class = "[activeClass, errorClass]">
+        data: {
+            activeClass: 'active',
+            errorClass: 'text-danger'
+        } = > class = "active text-danger"로 바인딩
+        </div>
+        <div v-bind:class = "[isActive ? activeClass : '', errorClass]">
+            삼항연산자를 통해 조건부 바인딩도 가능
+        </div>
+    </div>
+    <!-- 컴포넌트와 함께 사용-->
+    <div>
+        컴포넌트 학습후 다시 학습
+    </div>
+    <!-- 스타일 바인딩 -->
+    <!-- 객체 구문 -->
+    <div id = "app-3">
+        <div v-bind:style = "{ color : activeColor, fontSize : fontSize + 'px'">
+            data: {
+                activeColor: 'red',
+                fontSize: 30
+            } => style = "color : red fontSize = 30px"로 바인딩
+        </div>
+        <!-- 객체 구문은 스타일 객체에 직접 바인딩하여 템플릿을 간결하게 하는 것이 바람직함 -->
+        <div v-bind:style = "styleObject">
+            data: {
+                styleObject: {
+                  color: 'red',
+                  fontSize: '13px'
+                }
+              }
+        </style>></div>
+    </div>
+    <!-- 배열 구문 -->
+    <div id = "app-4">
+        <div v-bind:style = "[baseStyles, overridingStyles"></div>
+    </div>
+    <!-- 다중 값 제공 -->
+    <!-- 스타일 속성에 접두사가 있는 여러 값을 배열로 전달 가능-->
+    <div id = "app-5">
+        <div v-bind:style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }">
+            한 스타일 속성에 대해 배열로 전달하면 브라우저가 지원하는 배열의 마지막 값을
+            렌더링
+        </div>
+    </div>
+</body>
+</html>
