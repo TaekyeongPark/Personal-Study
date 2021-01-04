@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Event Handling</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!-- v-on을 이용한 이벤트 청취 -->
+    <div id = 'app-1'>
+        <button v-on:click = "counter += 1">ADD 1</button>
+        <p>버튼을 클릭 한 횟수는 {{ counter }} 번 입니다.</p>
+    </div>
+    <!-- 메소드 이벤트 핸들러-->
+    <div id = 'app-2'>
+        <!-- 이벤트 핸들러의 로직은 복잡할 것이므로 v-on 속성에 인라인으로 하는 것은 적합하지 않음 -->
+        <!-- 따라서 이벤트 핸들러에 메소드를 등록 : 메소드 이름을 바인딩-->
+        <button v-on:click="greet">Greet</button>
+        <!-- 인라인 메소드 핸들러 구문 -->
+        <button v-on:click="say('hi')">Hi</button>
+    </div>
+    <script>
+        vm1 = new Vue({
+            el : '#app-1',
+            data : {
+                counter : 0
+            }
+        })
+        vm2 = new Vue({
+            el : '#app-2',
+            data : {
+                name : 'Vue.js'
+            },
+            methods: {
+                greet(event) {
+                    alert('Hello ' + this.name + ' !' )
+                    if(event){
+                        alert(event.target.tagName)
+                    }
+                },
+                say(message) {
+                    alert(message)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

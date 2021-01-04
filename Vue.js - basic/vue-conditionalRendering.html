@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>Vue Conditional Rendering</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body> 
+    <!-- 조건에 따라 블록을 렌더링하는 v-if 디렉티브 -->
+    <!-- v-else-if, v-else 구문도 사용가능 -->
+    <!-- 각 구문은 연속해서 사용해야 유효 -->
+    <div id='app-1'>
+        <h1 v-if = "awesome">Vue is awesome</h1>
+        <h1 v-else-if = "really">Really?</h1>
+        <ht v-else>Noooo~</ht>
+    </div>
+    <div id = 'app-2'>
+        <!-- 여러개의 엘리먼트를 조건부 렌더링에는 템플리 태그 사용-->
+        <!-- 템플릿 태그 : 자바스크립트를 통해 동적으로 렌더링 -->
+        <template v-if = "ok">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
+    </div>
+    <div id = "app-3">
+        <!-- 조건부 렌더링 시 템플릿의 같은 요소는 다시 렌더링 되지 않음 -->
+        <!-- 따라서 두 엘리먼트가 다름을 나타내는 key 속성을 사용해 구별해 다시 렌더링 -->
+        <template v-if = "loginType == 'username'">
+            <label>사용자이름</label>
+            <input placeholder="사용자 이름을 입력하세요" key = "username-input">
+            <br>
+            <button @click = "changeType()">로그인 유형 변경</button>
+        </template>
+        <template v-else>
+            <label>이메일</label>
+            <input placeholder="이메일을 입력하세요" key = "email-input">
+            <br>
+            <button @click = "changeType()">로그인 유형 변경</button>
+        </template>
+    </div>
+    <div id = "app-4">
+        <!-- v-show를 이용한 조건부 렌더링 -->
+        <!-- 
+            true일시 렌더링하는것은 동일하지만 v-show는 DOM에 남아있고 항상 렌더링 됨
+            display CSS 속성을 토글하여 작동
+        -->
+        <div v-show = "true">
+            v-show 렌더링
+        </div>
+    </div>
+    <script>
+        vm1 = new Vue({
+            el : "#app-1",
+            data : {
+                awesome : true
+            }
+        })
+        vm2 = new Vue({
+            el : "#app-2",
+            data : {
+                ok : true
+            }
+        })
+        vm3 = new Vue({
+            el : "#app-3",
+            data : {
+                loginType : 'username'
+            },
+            methods: {
+                changeType() {
+                    if(this.loginType == 'username'){
+                        this.loginType = 'email'
+                    }
+                    else{
+                        this.loginType = 'username'
+                    }
+                },
+            },
+        })
+    </script>
+</body>
+</html>
