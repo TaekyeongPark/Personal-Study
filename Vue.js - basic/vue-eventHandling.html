@@ -18,6 +18,42 @@
         <!-- 인라인 메소드 핸들러 구문 -->
         <button v-on:click="say('hi')">Hi</button>
     </div>
+    <!-- 이벤트 수식어 : 이벤트 수행시 추가 동작을 지정하는 것-->
+    <div id = 'app-3'>
+        <!--
+            event.preventDefault() : 태그의 기본 동작을 수행하지 않도록 설정하는 것
+            event.stopPropagation() : 이벤트가 부모로의 전파를 막기 위한 것
+        -->
+        <!-- 이벤트 전파 예제 -->
+        <!-- 눌린 것은 a태그지만 이벤트가 전파되어 li의 클릭이벤트도 수행됨 -->
+        <ul>
+            <li onclick = "alert('li태그')">
+                <a href="#", onclick = "alert('a태그')">클릭 이벤트 전파 예제</a>
+            </li>
+        </ul>
+        <!-- 클릭 이벤트 전파가 중단됩니다 -->
+        <a v-on:click.stop="doThis">클릭 이벤트 전파 중단</a>
+        <!-- 제출 이벤트가 페이지를 다시 로드 하지 않습니다 -->
+        <form v-on:submit.prevent="onSubmit"></form>
+        <!-- 수식어는 체이닝 가능합니다 -->
+        <a v-on:click.stop.prevent="doThat"></a>
+        <!-- 단순히 수식어만 사용할 수 있습니다 -->
+        <form v-on:submit.prevent></form>
+        <!-- 이벤트 리스너를 추가할 때 캡처모드를 사용합니다 -->
+        <!-- 즉, 내부 엘리먼트를 대상으로 하는 이벤트가 해당 엘리먼트에서 처리되기 전에 여기서 처리합니다. -->
+        <div v-on:click.capture="doThis">...</div>
+        <!-- event.target이 엘리먼트 자체인 경우에만 트리거를 처리합니다 -->
+        <!-- 자식 엘리먼트에서는 안됩니다 -->
+        <div v-on:click.self="doThat">...</div>
+        <!-- 클릭 이벤트는 최대 한번만 트리거 됩니다. -->
+        <a v-on:click.once="doThis"></a>
+    </div>
+    <!-- 키 수식어 -->
+    <!-- 키보드 이벤트 청취시 공통 키코드 확인 시 사용 -->
+    <div id = "app-4">
+        <!-- $evnet.key === 'enter' 일때 submit 수행-->
+        <input v-on:keyup.enter="submit">
+    </div>
     <script>
         vm1 = new Vue({
             el : '#app-1',
@@ -41,6 +77,10 @@
                     alert(message)
                 }
             },
+        })
+        vm3 = new Vue({
+            el : '#app-3',
+            
         })
     </script>
 </body>
