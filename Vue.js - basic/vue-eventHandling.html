@@ -28,7 +28,7 @@
         <!-- 눌린 것은 a태그지만 이벤트가 전파되어 li의 클릭이벤트도 수행됨 -->
         <ul>
             <li onclick = "alert('li태그')">
-                <a href="#", onclick = "alert('a태그')">클릭 이벤트 전파 예제</a>
+                <a href="#" onclick = "alert('a태그')">클릭 이벤트 전파 예제</a>
             </li>
         </ul>
         <!-- 클릭 이벤트 전파가 중단됩니다 -->
@@ -53,6 +53,19 @@
     <div id = "app-4">
         <!-- $evnet.key === 'enter' 일때 submit 수행-->
         <input v-on:keyup.enter="submit">
+        <!-- 
+            Key Codes
+            .enter .tab .delete (“Delete” 와 “Backspace” 키 모두를 캡처합니다)
+            .esc .space .up .down .left .right
+            전역 config.keyCodes 객체를 통해 사용자 지정 키 수식어 별칭을 지정할 수도 있다.
+            ex) Vue.config.keyCodes.f1 = 112
+        -->
+    </div>
+    <!-- 시스템 수식어 키 목록 -->
+    <!-- .ctrl .alt .shift .meta(맥에서 command 키) -->
+    <div id = "app-5">
+        <div @click.ctrl="doSomething">Do something</div>
+        <div @keyup.ctrl="doSomething">Do something</div>
     </div>
     <script>
         vm1 = new Vue({
@@ -81,6 +94,14 @@
         vm3 = new Vue({
             el : '#app-3',
             
+        })
+        vm5 = new Vue({
+            el : '#app-5',
+            methods : {
+                doSomething() {
+                    alert("crtl 버튼 동작")
+                }
+            }
         })
     </script>
 </body>
