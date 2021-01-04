@@ -1,2 +1,3 @@
-# VueStudy
-My personal vue.js base study repository
+# MY Personal Study Repogitory
+
+JAVA - SpringBoot, Vue.js
