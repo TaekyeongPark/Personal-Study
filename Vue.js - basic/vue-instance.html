@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Instance Study</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id = "app">
+        <p> {{ foo }} </p>
+        <button v-on:click = "show"> Is Change?</button>
+        <p v-if="seen">No!</p>
+    </div>
+    <div id = "example"></div>
+    <br>
+    <div id = "life-cycle">
+        라이프 사이클 
+        <img v-bind:src = "lifeCycleImg">
+    </div>
+    <script>
+        /*
+        Vue 인스턴스가 생성될 때 data 객체에 있는 모든 속성이
+        Vue의 반응형 시스템에 추가됩니다. 각 속성값이 변경될 때 
+        뷰가 “반응”하여 새로운 값과 일치하도록 업데이트됩니다.
+        */
+        // 데이터 객체
+        var data = { a: 1 }
+
+        // Vue인스턴스에 데이터 객체를 추가합니다.
+        var vm = new Vue({
+        data: data
+        })
+
+        // 인스턴스에 있는 속성은
+        // 원본 데이터에 있는 값을 반환합니다.
+        vm.a === data.a // => true
+
+        // 인스턴스에 있는 속성값을 변경하면
+        // 원본 데이터에도 영향을 미칩니다.
+        vm.a = 2
+        data.a // => 2
+
+        // ... 반대로 마찬가지입니다.
+        data.a = 3
+        vm.a // => 3
+
+        // 데이터가 변경되면 화면은 다시 렌더링 된다. 하지만 data에 있는
+        // 속성들은 인스턴스가 생성될 때 존재한 것들만 반응형으로 작동한다
+        // 다음과 같은 새속성을 추가하면
+        vm.b = 'h1'
+        // b가 변경되더라도 화면이 갱신되지 않음
+        // 따라서 어떤 속성이 나중에 필요하다면 미리 빈 값으로 선언해놓아야한다.
+        var data1 = {
+            newTodoText: '',
+            visitCount: 0,
+            hideCompletedTodos: false,
+            todos: [],
+            error: null
+        }
+        
+        // 하지만 변경되지 않는 정적 객체를 만들기를 원한다면 Object.freeze(obj)
+        // 를 사용하면 된다.
+        var obj = { foo : 'bar', seen : false }
+        Object.freeze(obj)
+        var testVm = new Vue({
+            el : '#app',
+            data : obj,
+            methods: {
+                show() {
+                    this.seen = true
+                    this.foo = 'baz'
+                },
+            },
+        })
+
+        // Vue 인스턴스를 위한 속성 및 메소드
+        // 사용자 정의 속성과 구분하기 위해 $ 접두어 사용
+        var testVm2 = new Vue({
+            el: '#example',
+            data : data
+        })
+
+        testVm2.$data === data  //true
+        testVm2.$el === document.getElementById('example')  //true
+        // 인스턴스 메소드
+        testVm2.$watch('a', function(newVal, oldVal){
+            console.log('new : '+ newVal + ', old : ' + oldVal)
+        })
+        data.a = 2
+
+        // 인스턴스 라이프 사이클 훅
+        // Vue 인스턴스가 생성되고 초기화될때의 단계
+        new Vue({
+            el : '#life-cycle',
+            data: {
+                a: 1,
+                lifeCycleImg : "https://kr.vuejs.org/images/lifecycle.png"
+            },
+            created: function () {
+                // `this` 는 vm 인스턴스를 가리킵니다.
+                console.log('a is: ' + this.a)
+            }
+            })
+            // => "a is: 1"
+    </script>
+</body>
+</html>
