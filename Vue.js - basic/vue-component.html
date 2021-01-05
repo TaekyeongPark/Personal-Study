@@ -7,6 +7,7 @@
 <body>
     <!-- 
         Vue에서 컴포넌트는 미리 정의된 옵션을 가진 Vue 인스턴스를 뜻함
+        사용자 지정 엘리먼트라고 생각하면 됨
     -->
     <div id="app">
         <ol>
@@ -22,8 +23,39 @@
           ></todo-item>
         </ol>
     </div>
+    <hr>
+    <!-- 전역 컴포넌트 -->
+    <div id = "app-1">
+        <my-component></my-component>
+    </div>
+    <hr>
+    <!-- 지역 등록 컴포넌트 -->
+    <div id = 'app-2'>
+        <my-component></my-component>
+        <my-local-component></my-local-component>
+    </div>
+    <!-- 주의점 -->
+    <!--
+        <ul>,<ol>,<table>과<select>와 같은 일부 엘리먼트는 그 안에 어떤 엘리먼트가 나타날 수 있는지에 
+        대한 제한을 가지고 있으며,<option>과 같이 특정 다른 엘리먼트 안에만 나타날 수 있습니다.
+        에러 예제)
+        <table>
+            <my-row>...</my-row>
+        </table>
+        해결법) is 속성 사용
+        <table>
+            <tr is="my-row"></tr>
+        </table>
+    -->
+    <hr>
+    <!-- 컴포넌트에서 data 옵션은 함수만 사용 가능하다 -->
+    <div id = 'app-3'>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+        <simple-counter></simple-counter>
+    </div>
     <script>
-       // todo-item 이름을 가진 컴포넌트를 정의합니다
+       // todo-item 이름을 가진 컴포넌트를 정의하여 뷰 객체에 등록
        Vue.component('todo-item', {
             // 이제 todo-item 컴포넌트는 "prop" 이라고 하는
             // 사용자 정의 속성 같은 것을 입력받을 수 있습니다.
@@ -31,8 +63,12 @@
             props: ['todo'],
             template: '<li>{{ todo.text }}</li>'
         })
+        // 전역 컴포넌트 등록
+        Vue.component('my-component',{
+            template : '<div>사용자 정의 전역 컴포넌트입니다.</div>'
+        })
 
-        var app7 = new Vue({
+        vm = new Vue({
             el: '#app',
             data: {
                 groceryList: [
@@ -42,6 +78,32 @@
                 ]
             }
         })
+        // 루트 인스턴스 생성
+        vm1 = new Vue({
+            el : '#app-1',
+        })
+        vm2 = new Vue({
+            el : '#app-2',
+            components : {
+                'my-local-component': {
+                    template : '<div>사용자 정의 지역 컴포넌트입니다.</div>'
+                },
+            }
+        })
+        vm3 = new Vue({
+            el : '#app-3',
+            components :{
+                'simple-counter' : {
+                    template: '<button v-on:click="count += 1">{{ count }}</button>',
+                    data : function(){
+                        return {
+                            count : 0
+                        }
+                    }
+                }
+            }
+        })
+
     </script>
 </body>
 </html>

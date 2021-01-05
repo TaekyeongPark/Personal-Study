@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Form Binding</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <!-- v-model 디렉티브를 통한 폼 이벽 바인딩 -->
+    <!-- input과 textarea 엘리먼트에 양방향 데이터 바인딩 -->
+    <!-- 
+        v-model은 form의 기본 value, checked, seleted 속성을 무시
+        따라서 Vue 인스턴스 데이터를 원본으로 가지기에 초기값을 선언해야한다.
+    -->
+    <!--
+        text 와 textarea 태그는 value속성과 input이벤트를 사용
+        체크박스들과 라디오버튼들은 checked 속성과 change 이벤트를 사용
+        Select 태그는 value를 prop으로, change를 이벤트로 사용
+    -->
+    <div id = 'app-1'>
+        <!-- 문자열 -->
+        <input v-model.lazy="message1" placeholder="여기를 수정해 보세요">
+        <p>메세지 : {{message1}}</p>
+        <hr>
+        <!-- 여러줄을 가진 문장 -->
+        <!-- 텍스트 영역의 보간은 작동하지 않기에 v-model을 사용해야함 -->
+        <span>여러 줄을 가지는 메세지 : </span>
+        <p style = "white-space : pre-line">{{message2}}</p>
+        <textarea v-model = "message2" placeholder="여러줄을 입력해보세요"></textarea>
+        <hr>
+        <!-- 체크박스와 라디오버튼-->
+        <input type = "checkbox" id="checkbox1" v-model="checked">
+        <label for = "checkbox1">{{checked}}</label>
+        <input type = "radio" id="radio" v-model="checked">
+        <label for = "radio">{{checked}}</label>
+        <br>
+        <!-- 여러개의 체크박스는 하나의 배열에 바인딩할수 있다 -->
+        <input type="checkbox" id = "jack" value = "jack" v-model = "checkedNames">
+        <label for = "jack">jack</label>
+        <input type="checkbox" id = "john" value = "john" v-model = "checkedNames">
+        <label for = "john">jack</label>
+        <input type="checkbox" id = "jake" value = "jake" v-model = "checkedNames">
+        <label for = "jake">jack</label>
+        <p>{{checkedNames}}</p>
+        <hr>
+        <!-- 셀렉트 -->
+        <select v-model="selected">
+            <option disabled value="">Please select one</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>선택함: {{ selected }}</span>
+        <br>
+        <!-- 다중 셀렉트 multiple -->
+        <select v-model="selectedArr" multiple>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <!-- v-for를 이용한 렌더링
+            <option v-for = "option in options" v-bind:value = "option.value">{{option.text}}</option>
+            -->
+            optio
+        </select>
+        <span>선택함: {{ selectedArr }}</span>
+        <hr>
+        <!-- 수식어 -->
+        <!--
+            .lazy : 동적으로 바로 변경되는 것이 아닌 change이벤트 후에 동기화
+            .number : 사용자 입력을 자동으로 숫자로 형변환
+            .trim : 사용자 입력에 자동으로 trim
+        -->
+    </div>
+    <script>
+        vm1 = new Vue({
+            el : '#app-1',
+            data : {
+                message1 : '',
+                message2 : '',
+                checked : false,
+                checkedNames : [],
+                selected : '',
+                selectedArr : []
+            }            
+        })
+    </script>
+</body>
+</html>
