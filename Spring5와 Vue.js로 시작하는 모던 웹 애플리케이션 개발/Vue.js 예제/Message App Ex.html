@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message App Ex</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        [v-cloak] {display : none;}
+        body > div {
+            width : 500px;
+            margin : 0 auto;
+        }
+        textarea { width : 100%; }
+        ul { padding : 0 15px; }
+    </style>
+</head>
+<body>
+    <!-- 
+        Vue.js의 옵션을 통한 SPA 메세지 앱
+        기능
+        - 메세지 추가
+        - 메세지 리스트 보기
+        - 메세지 삭제
+        - 특정 조건에서 추가 기능을 자동으로 비활성화
+    -->
+    <div id = "message-app">
+        <ul>
+            <li v-for = "message in messages">
+                {{ message.text }} - {{ message.createdAt }}
+                <button @click = "deleteMessage(message)">X</button>
+            </li>
+        </ul>
+        <form @submit.prevent = "addMessage">
+            <p>글자 수 : {{ newMessage.length }} </p>
+            <textarea v-model = "newMessage" placeholder="leave message"></textarea>
+            <button type="submit" v-bind:disabled = "isDisabled">Add</button>
+        </form>
+    </div>
+    <script>
+        let vm = new Vue({
+            el : '#message-app',
+            data : {
+                messages : [],
+                newMessage : '',
+            },
+            methods: {
+                addMessage() {
+                    this.messages.push({
+                        text : this.newMessage,
+                        createdAt : new Date()
+                    })
+                    this.newMessage = ''
+                },
+                deleteMessage(message) {
+                    this.messages.splice(this.messages.indexOf(message),1)
+                }
+            },
+            computed : {
+                isDisabled() {
+                    if(this.newMessage.length > 50 || this.newMessage.length < 10){
+                        return true
+                    }
+                    else{
+                        return false
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
