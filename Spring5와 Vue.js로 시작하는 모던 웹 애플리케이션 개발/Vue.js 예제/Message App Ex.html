@@ -23,24 +23,32 @@
         - 특정 조건에서 추가 기능을 자동으로 비활성화
     -->
     <div id = "message-app">
+        <!--
         <ul>
             <li v-for = "message in messages">
                 {{ message.text }} - {{ message.createdAt }}
                 <button @click = "deleteMessage(message)">X</button>
             </li>
         </ul>
+        -->
+        <!-- 사용자 컴포넌트 : props의 items에 messages를 연결, delete 사용자 이벤트에 deleteMessage를 연결 -->
+        <message-list :items = "messages" @delete="deleteMessage"></message-list>
         <form @submit.prevent = "addMessage">
             <p>글자 수 : {{ newMessage.length }} </p>
             <textarea v-model = "newMessage" placeholder="leave message"></textarea>
             <button type="submit" v-bind:disabled = "isDisabled">Add</button>
         </form>
     </div>
-    <script>
+    <script type = "module">
+        import MessageList from './components/MessageList.js'
         let vm = new Vue({
             el : '#message-app',
             data : {
                 messages : [],
                 newMessage : '',
+            },
+            components : {
+                MessageList
             },
             methods: {
                 addMessage() {
