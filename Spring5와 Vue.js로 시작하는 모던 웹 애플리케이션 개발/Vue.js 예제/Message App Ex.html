@@ -35,12 +35,14 @@
         <message-list :items = "messages" @delete="deleteMessage"></message-list>
         <form @submit.prevent = "addMessage">
             <p>글자 수 : {{ newMessage.length }} </p>
-            <textarea v-model = "newMessage" placeholder="leave message"></textarea>
+            <textarea v-model = "newMessage" placeholder="leave message" v-focus></textarea>
             <button type="submit" v-bind:disabled = "isDisabled">Add</button>
         </form>
     </div>
     <script type = "module">
         import MessageList from './components/MessageList.js'
+        import './directives/focus-directive.js'
+        import './filters/datetime-filter.js'
         let vm = new Vue({
             el : '#message-app',
             data : {

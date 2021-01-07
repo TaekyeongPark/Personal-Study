@@ -4,7 +4,7 @@ export default{
     template :  
     `<ul>
         <li v-for = "item in items">
-            {{ item.text }} - {{ item.createdAt }}
+            {{ item.text }} - {{ item.createdAt | datetime }}
             <button @click = "deleteMessage(item)">X</button>
         </li>
     </ul>`,
