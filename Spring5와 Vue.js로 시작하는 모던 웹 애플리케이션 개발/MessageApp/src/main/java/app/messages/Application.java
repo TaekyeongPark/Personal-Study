@@ -9,6 +9,4 @@ public class Application {
         MessageService messageService = context.getBean(MessageService.class);
         messageService.save("Hello, Spring!");
     }
-
-
 }
